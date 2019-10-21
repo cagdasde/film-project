@@ -5,9 +5,6 @@ const urlElement = document.querySelector("#url");
 const cardbody = document.querySelectorAll(".card-body")[1];
 const clear  = document.getElementById("clear-films");
 
-const ui = new UI();
-//Storage objesi üretme
-const storage = new Storage();
 
 
 eventListeners();
@@ -16,8 +13,8 @@ function eventListeners() {
 
     form.addEventListener("submit", addFilm);
     document.addEventListener("DOMContentLoaded", function () {
-        let films = storage.getFilmsFromStorage();
-        ui.loadAllFilms(films);
+        let films = Storage.getFilmsFromStorage();
+        UI.loadAllFilms(films);
     });
 cardbody.addEventListener("click",deleteFilm);
 clear.addEventListener("click",clearAllFilms);
@@ -30,18 +27,18 @@ function addFilm(e) {
 
     if (title === "" || director === "" || url === "") {
         //hata
-        ui.displayMessages("Tüm alanları doldurun..", "danger");
+        UI.displayMessages("Tüm alanları doldurun..", "danger");
     }
     else {
         const newFilm = new Film(title, director, url);
 
-        ui.addFilmToUI(newFilm);
-        storage.addFilmToStorage(newFilm);  //storage a film ekleme
+        UI.addFilmToUI(newFilm);
+        Storage.addFilmToStorage(newFilm);  //storage a film ekleme
 
-        ui.displayMessages("Film başarı ile eklendi..", "success");
+        UI.displayMessages("Film başarı ile eklendi..", "success");
 
     }
-    ui.clearInputs(titleElement, urlElement, directorElement);
+    UI.clearInputs(titleElement, urlElement, directorElement);
     e.preventDefault();
 
 }
@@ -49,10 +46,10 @@ function addFilm(e) {
 function deleteFilm(e){
     
    if (e.target.id === "delete-film") {
-       ui.deleteFilmFromUI(e.target);
-      storage.deleteFilmFromStorage(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
+       UI.deleteFilmFromUI(e.target);
+      Storage.deleteFilmFromStorage(e.target.parentElement.previousElementSibling.previousElementSibling.textContent);
 
-      ui.displayMessages("Silme İşlemi Başarılı","success");
+      UI.displayMessages("Silme İşlemi Başarılı","success");
 
    }
 }
@@ -60,7 +57,7 @@ function clearAllFilms(){
 if (confirm("emin misiniz ?")){
 
 
-    ui.clearAllFilmsFromUI();
-    storage.clearAllFilmsFromStorage();
+    UI.clearAllFilmsFromUI();
+    Storage.clearAllFilmsFromStorage();
 }
 }
